@@ -1,0 +1,16 @@
+{
+  "TestData": [
+    {
+      "Scenario": "TEST1"
+    },
+    {
+      "Scenario": "TEST2"
+
+    },
+    {
+      "Scenario": "TEST3"
+
+    }
+  ]
+
+}
