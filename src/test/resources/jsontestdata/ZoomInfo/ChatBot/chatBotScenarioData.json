@@ -1,15 +1,22 @@
 {
   "TestData": [
     {
-      "Scenario": "TEST1"
-    },
-    {
-      "Scenario": "TEST2"
+      "useCase": "valid",
+      "email": "diwahar@tcs.com",
+      "scenario": "Valid Email id with with business domain"
 
     },
     {
-      "Scenario": "TEST3"
-
+      "useCase": "invalid",
+      "email": "diwahar@gmail.com",
+      "scenario": "Email id with with non- business domain",
+      "message": "Please use a business email address."
+    },
+    {
+      "useCase": "invalid",
+      "email": "diwahar",
+      "scenario": "Invalid email without @ domain ",
+      "message": "Please enter a valid email address."
     }
   ]
 
