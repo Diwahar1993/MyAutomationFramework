@@ -2,9 +2,13 @@ package Tests.ZoomInfo;
 
 import DataProviders.DataProviderClass;
 import Modules.ZoomInfoChatBotModule;
+import POJO.EmailInputRoot;
 import Tests.BaseTest;
 import Utils.ExtentReportsManager;
+import Utils.JsonUtils;
 import Webpages.ZoomInfoChatBot.ZoomInfoChatBotMainPage;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -35,7 +39,7 @@ public class ZoomInfoChatBotTest extends BaseTest {
 
 
     }
-    @Test(enabled = true,priority = 2)
+    @Test(enabled = false,priority = 2)
     public void VerifyReadandAcceptCookies() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if the Cookies are loaded on the first start and verify if they are closed after accepting");
@@ -64,6 +68,30 @@ String ExpectedPolicyWords = "Insent stores cookies on your computer to improve 
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if Unread message notification icon is displayed in the chatbot icon and post reading it vanishes");
         zoomInfoChatBotModule.VerifyUnreadMessageNotification(zoomInfoChatBotMainPage);
+
+    }
+    @Test(enabled = true,priority = 6,dataProvider = "chatBotTestDataSet",dataProviderClass = DataProviderClass.class)
+    public void VerifyifUserIsAbleToEnterValidEmailId(Object data) throws InterruptedException, JsonProcessingException {
+        String dataObject = JsonUtils.objectToJSONString(data);
+        ObjectMapper objectMapper = new ObjectMapper();
+        EmailInputRoot emailInputRoot = objectMapper.readValue(dataObject,EmailInputRoot.class);
+
+
+
+        ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
+        ExtentReportsManager.startTest("Verify "+emailInputRoot.getScenario());
+        if(emailInputRoot.getUseCase().equals("valid")){
+            zoomInfoChatBotModule.verifyIfTheEmailInputIsValid(zoomInfoChatBotMainPage,emailInputRoot.getEmail());
+
+        }else if(emailInputRoot.getUseCase().equals("invalid")){
+
+            zoomInfoChatBotModule.verifyifEmailFieldReturnsErrorwithInvalidEmail(zoomInfoChatBotMainPage,emailInputRoot.getEmail(),emailInputRoot.getMessage());
+
+
+
+        }
+
+
 
     }
 

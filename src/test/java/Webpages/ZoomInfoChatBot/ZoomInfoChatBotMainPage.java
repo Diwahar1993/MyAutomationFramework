@@ -56,6 +56,20 @@ public class ZoomInfoChatBotMainPage {
 @FindBy(xpath = "//div[@id='insent-popup-message-detail']")
 WebElement insentPopUpMessageDetails;
 
+@FindBy(xpath ="//input[@name='email']")
+WebElement emailInput;
+
+@FindBy(xpath = "//button[@class='sc-ckVGcZ gRuMQg']")
+WebElement emailSubmitButton;
+
+@FindBy(xpath = "//div[@class='sc-iwsKbI cWzUpN' and contains(text(), 'How do you know about Zoominfo?')]")
+WebElement howDoYouKnowZoomDefault;
+
+    String xpath = "//div[@class='sc-kEYyzF faNzMh' and contains(text(), '{message}')]";
+
+
+
+
 
 
     // Page Functions
@@ -108,6 +122,36 @@ WebElement insentPopUpMessageDetails;
     }
     public void waitforSometime(){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+    }
+    public void clickOpenChatBotWindow(){
+        insentPopUpMessageDetails.click();
+
+    }
+    public boolean checkifEmailInputBoxisVisible(){
+            return emailInput.isDisplayed();
+    }
+
+    public void enterEmail(String email) {
+        emailInput.sendKeys(email);
+    }
+
+    public void submitEmail() {
+        emailSubmitButton.click();
+    }
+    public boolean isDefaultHowDoYouKnowDisplayed(){
+            return howDoYouKnowZoomDefault.isDisplayed();
+    }
+
+
+    public String getHowDoYouKnowText() {
+            return howDoYouKnowZoomDefault.getText();
+    }
+
+
+    public String getErrorToasterMessage(String expectedMessage) {
+           WebElement errorMessage = driver.findElement(By.xpath(xpath.replace("{message}",expectedMessage)));
+           return errorMessage.getText();
+
     }
 }
 

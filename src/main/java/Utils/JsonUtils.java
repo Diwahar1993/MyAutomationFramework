@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,6 +37,20 @@ public class JsonUtils {
         }
 
         return dataObjects;
+    }
+
+    public static <T> String objectToJSONString(T object) {
+        String json = null;
+        ObjectMapper mapperObj = new ObjectMapper();
+        mapperObj.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        try {
+            json = mapperObj.writeValueAsString(object);
+        } catch (Throwable var4) {
+            var4.printStackTrace();
+        }
+
+        return json;
     }
 
 
