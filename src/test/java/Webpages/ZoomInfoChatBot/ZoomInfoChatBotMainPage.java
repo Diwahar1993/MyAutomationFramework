@@ -13,7 +13,7 @@ import java.util.List;
 public class ZoomInfoChatBotMainPage {
     WebDriver driver;
 
-    private static final String URL="https://www.nikhilsmagicworld.com/";
+    private static final String URL="https://recruitment.web-test.insent.ai/fe-assignment";
 
     public ZoomInfoChatBotMainPage(WebDriver driver){
         this.driver=driver;
