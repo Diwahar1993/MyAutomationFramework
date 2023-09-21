@@ -106,6 +106,18 @@ public class ZoomInfoChatBotTest extends BaseTest {
         zoomInfoChatBotModule.verifyIfUserisAbleToOpenAndCloseTheChat(zoomInfoChatBotMainPage);
     }
 
+    //Open a new tab with google.com ,stay there for 10 seconds, come back to chat
+    //page and enter the data in the bot.
+    @Test(enabled = true, priority = 9)
+    public void VerifyifUserIsAbleToOpenNewTabAndComeBackToChat()  {
+        ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
+        ExtentReportsManager.startTest("Verify if user is able to Open a new tab with google.com ,stay there for 10 seconds, come back to chat\n" +
+                "page and enter the data in the bot");
+        ExtentReportsManager.logInfoWithMarkup("Open a new tab with google.com ,stay there for 10 seconds, come back to chat\n" +
+                "page and enter the data in the bot.");
+        zoomInfoChatBotModule.verifyIfUserIsAbleToOpenNewTabAndComeBackToChat(zoomInfoChatBotMainPage);
+    }
+
     @AfterMethod
     public void closeDriver(){
         driver.manage().deleteAllCookies();

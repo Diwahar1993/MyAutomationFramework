@@ -2,9 +2,7 @@ package Webpages.ZoomInfoChatBot;
 
 import Utils.ExtentReportsManager;
 import com.aventstack.extentreports.ExtentTest;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -13,7 +11,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.swing.*;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class ZoomInfoChatBotMainPage {
     WebDriver driver;
@@ -178,5 +179,21 @@ public class ZoomInfoChatBotMainPage {
 
     public void CloseIconAndClick() {
         closeIcon.click();
+    }
+
+    public void openNewTabAndLoadGoogleAndWaitfor10SecAndReturnBackToChat(String url) {
+        ((JavascriptExecutor) driver).executeScript("window.open('', '_blank');");
+        Set<String> windowHandles = driver.getWindowHandles();
+        ArrayList<String> handleList = new ArrayList<String>(windowHandles);
+      driver.switchTo().window(handleList.get(1));
+      driver.get(url);
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+      driver.switchTo().window(handleList.get(0));
+
+
+
+    }
+    public String getCurrentWindowTitle(){
+        return driver.getTitle();
     }
 }
