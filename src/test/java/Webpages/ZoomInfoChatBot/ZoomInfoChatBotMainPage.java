@@ -56,6 +56,10 @@ public class ZoomInfoChatBotMainPage {
     @FindBy(xpath = "//div[@class='sc-iwsKbI cWzUpN' and contains(text(), 'How do you know about Zoominfo?')]")
     WebElement howDoYouKnowZoomDefault;
     String xpath = "//div[@class='sc-kEYyzF faNzMh' and contains(text(), '{message}')]";
+    @FindBy(xpath ="//span[text()='Restart conversation']")
+    WebElement restartConversationButton;
+    @FindBy(xpath="(//div[@id='insent-text-message-message-wrapper-client-message'])[last()]")
+    WebElement insentBotmentioninChat;
 
     // Page Functions
 
@@ -148,5 +152,13 @@ public class ZoomInfoChatBotMainPage {
     public String getErrorToasterMessage(String expectedMessage) {
         WebElement errorMessage = driver.findElement(By.xpath(xpath.replace("{message}",expectedMessage)));
         return errorMessage.getText();
+    }
+
+    public void clickRestartConversation() {
+        restartConversationButton.click();
+
+    }
+    public String getLastChatBotMentionText(){
+        return insentBotmentioninChat.getText();
     }
 }

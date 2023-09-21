@@ -43,7 +43,7 @@ public class ZoomInfoChatBotTest extends BaseTest {
     }
 
     // Test 2: Verify if Cookies are loaded and can be accepted
-    @Test(enabled = false, priority = 2)
+    @Test(enabled = true, priority = 2)
     public void VerifyReadandAcceptCookies() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if the Cookies are loaded on the first start and verify if they are closed after accepting");
@@ -91,7 +91,13 @@ public class ZoomInfoChatBotTest extends BaseTest {
             zoomInfoChatBotModule.verifyifEmailFieldReturnsErrorwithInvalidEmail(zoomInfoChatBotMainPage, emailInputRoot.getEmail(), emailInputRoot.getMessage());
         }
     }
-
+    @Test(enabled = true, priority = 7)
+    public void VerifyifUserIsAbleToRestartTheConversation()  {
+        ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
+        ExtentReportsManager.startTest("Verify if user is able to restart the conversation");
+        ExtentReportsManager.logInfoWithMarkup("1) Click open chat \n 2) Click on Restart \n 3) Verify if @mention incent bot is displayed \n 4) Verify if email input field is displayed ");
+        zoomInfoChatBotModule.verifyIfUserIsAbleToRestarTheConversation(zoomInfoChatBotMainPage);
+    }
     @AfterMethod
     public void closeDriver(){
         driver.manage().deleteAllCookies();
@@ -106,7 +112,11 @@ public class ZoomInfoChatBotTest extends BaseTest {
     public void afterSuite(){
         // to include any actions that needs to be performed After suite
         ExtentReportsManager.flushReport();
-        driver.quit();
+        while(driver!=null) {
+            driver.quit();
+            driver = null;
+        }
+
 
 
     }

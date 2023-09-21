@@ -114,4 +114,27 @@ public class ZoomInfoChatBotModule {
             }
         }
     }
+
+    // Verify if an User is able to restart the conversation
+    public void verifyIfUserIsAbleToRestarTheConversation(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+        zoomInfoChatBotMainPage.acceptPolicy();
+        zoomInfoChatBotMainPage.switchToChatBotFrame();
+        zoomInfoChatBotMainPage.clickOpenChatBotWindow();
+        zoomInfoChatBotMainPage.clickRestartConversation();
+        String actualChatBotText = zoomInfoChatBotMainPage.getLastChatBotMentionText();
+        String expected = "@InsentBot";
+        if (actualChatBotText.equals(expected)) {
+            ExtentReportsManager.logPass("Valid last mention " + actualChatBotText + " is Displayed");
+        } else {
+            ExtentReportsManager.logFail("Valid last mention is not displayed ! Actual :"+actualChatBotText+" Expected : "+expected);
+        }
+        //verify if email input box is again asked to user
+
+        if(zoomInfoChatBotMainPage.checkifEmailInputBoxisVisible()){
+            ExtentReportsManager.logPass("Email is again asked to user after restart " );
+        }else {
+            ExtentReportsManager.logFail("Email input is not displayed");
+        }
+
+    }
 }
