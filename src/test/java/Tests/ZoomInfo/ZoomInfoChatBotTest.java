@@ -98,6 +98,14 @@ public class ZoomInfoChatBotTest extends BaseTest {
         ExtentReportsManager.logInfoWithMarkup("1) Click open chat \n 2) Click on Restart \n 3) Verify if @mention incent bot is displayed \n 4) Verify if email input field is displayed ");
         zoomInfoChatBotModule.verifyIfUserIsAbleToRestarTheConversation(zoomInfoChatBotMainPage);
     }
+    @Test(enabled = true, priority = 8)
+    public void VerifyifUserIsAbleToOpenAndCloseThenConversation()  {
+        ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
+        ExtentReportsManager.startTest("Verify if user is able to Open and Close the conversation");
+        ExtentReportsManager.logInfoWithMarkup("1) Click open chat \n 2) Click on chat to Open \n 3) Verify chat window is displayed \n 4) close the chat \n Verify if chat is closed correctly ");
+        zoomInfoChatBotModule.verifyIfUserisAbleToOpenAndCloseTheChat(zoomInfoChatBotMainPage);
+    }
+
     @AfterMethod
     public void closeDriver(){
         driver.manage().deleteAllCookies();

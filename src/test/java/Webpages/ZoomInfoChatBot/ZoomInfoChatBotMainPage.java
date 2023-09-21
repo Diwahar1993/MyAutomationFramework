@@ -60,6 +60,10 @@ public class ZoomInfoChatBotMainPage {
     WebElement restartConversationButton;
     @FindBy(xpath="(//div[@id='insent-text-message-message-wrapper-client-message'])[last()]")
     WebElement insentBotmentioninChat;
+    @FindBy(xpath ="//div[@id='insent-conversation-list']")
+    WebElement insentConversationList;
+    @FindBy(xpath ="//div[@data-testId='insent-test-card-close']")
+    WebElement closeIcon;
 
     // Page Functions
 
@@ -160,5 +164,19 @@ public class ZoomInfoChatBotMainPage {
     }
     public String getLastChatBotMentionText(){
         return insentBotmentioninChat.getText();
+    }
+
+    public boolean conversationListIsDisplayed() {
+      try{
+          ExtentReportsManager.logInfo("Chat window displayed "+insentConversationList.isDisplayed());
+          return insentConversationList.isDisplayed();
+      }catch(Exception e){
+          ExtentReportsManager.logInfo("Chat window is not  displayed ");
+          return false;
+      }
+    }
+
+    public void CloseIconAndClick() {
+        closeIcon.click();
     }
 }
