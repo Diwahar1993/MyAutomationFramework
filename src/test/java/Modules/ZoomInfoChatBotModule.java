@@ -137,4 +137,26 @@ public class ZoomInfoChatBotModule {
         }
 
     }
+
+    public void verifyIfUserisAbleToOpenAndCloseTheChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+        zoomInfoChatBotMainPage.acceptPolicy();
+        zoomInfoChatBotMainPage.switchToChatBotFrame();
+        zoomInfoChatBotMainPage.clickOpenChatBotWindow();
+        //verify if you are able to view the open chatWindow
+        if(zoomInfoChatBotMainPage.conversationListIsDisplayed()){
+            ExtentReportsManager.logPass("Chat window is opened successfully " );
+        }else{
+            ExtentReportsManager.logFail("FAILED | chat window is not displayed");
+        }
+
+        //close the chat and see if chat window is not displayed
+        zoomInfoChatBotMainPage.CloseIconAndClick();
+        if(!zoomInfoChatBotMainPage.conversationListIsDisplayed()){
+            ExtentReportsManager.logPass("Chat window is closed successfully " );
+        }else{
+            ExtentReportsManager.logFail("FAILED | chat window is not closed");
+        }
+
+
+    }
 }
