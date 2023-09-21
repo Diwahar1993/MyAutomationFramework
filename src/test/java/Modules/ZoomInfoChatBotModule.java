@@ -159,4 +159,32 @@ public class ZoomInfoChatBotModule {
 
 
     }
+
+    public void verifyIfUserIsAbleToOpenNewTabAndComeBackToChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+        zoomInfoChatBotMainPage.acceptPolicy();
+        zoomInfoChatBotMainPage.switchToChatBotFrame();
+        zoomInfoChatBotMainPage.clickOpenChatBotWindow();
+        //openNew tab "google.com"
+        zoomInfoChatBotMainPage.openNewTabAndLoadGoogleAndWaitfor10SecAndReturnBackToChat("https://www.google.com/");
+        String titleAfterSwitching = zoomInfoChatBotMainPage.getCurrentWindowTitle();
+        if(titleAfterSwitching.equals("Insent.ai")){
+            ExtentReportsManager.logPass("Opened google and came back to the chat bot page sucessfully" );
+            //again switch to chatbot and open and operate chat
+            zoomInfoChatBotMainPage.switchToChatBotFrame();
+            zoomInfoChatBotMainPage.clickRestartConversation();
+            if (zoomInfoChatBotMainPage.checkifEmailInputBoxisVisible()) {
+                zoomInfoChatBotMainPage.enterEmail("success@zoominfo.com");
+                ExtentReportsManager.logPass("Opened google and came back to the chat bot and able to successfully interact" );
+
+            }else {
+                ExtentReportsManager.logFail("FAILED | opened google and did not come back to original page and Failed chat interaction");
+            }
+
+
+        }else {
+            ExtentReportsManager.logFail("FAILED | opened google and did not come back to original page");
+        }
+
+
+    }
 }
