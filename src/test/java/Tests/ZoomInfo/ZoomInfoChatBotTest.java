@@ -14,6 +14,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 
+/**
+ * Author: Diwahar Pandian
+ */
 public class ZoomInfoChatBotTest extends BaseTest {
     WebDriver driver;
     ZoomInfoChatBotModule zoomInfoChatBotModule = new ZoomInfoChatBotModule();
@@ -23,89 +26,87 @@ public class ZoomInfoChatBotTest extends BaseTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
     }
+
     @BeforeMethod
     public void intitializeDriver(){
         driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
     }
 
-
-    @Test(enabled = true,priority = 1)
+    // Test 1: Verify if the ChatBotURL is Loaded Successfully
+    @Test(enabled = true, priority = 1)
     public void validateMainPage() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if the ChatBotURL is Loaded Successfully");
         String ExpectedTitle = "Insent.ai";
-        zoomInfoChatBotModule.VerifyWebPageIsLoadedSuccessFully(zoomInfoChatBotMainPage,ExpectedTitle);
-
-
+        zoomInfoChatBotModule.VerifyWebPageIsLoadedSuccessFully(zoomInfoChatBotMainPage, ExpectedTitle);
     }
-    @Test(enabled = false,priority = 2)
+
+    // Test 2: Verify if Cookies are loaded and can be accepted
+    @Test(enabled = false, priority = 2)
     public void VerifyReadandAcceptCookies() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if the Cookies are loaded on the first start and verify if they are closed after accepting");
-String ExpectedPolicyWords = "Insent stores cookies on your computer to improve your website experience and provide more personalized services, both on this website, our chat and through other media. To find out more about the cookies we use, see our Privacy Policy.";
-        zoomInfoChatBotModule.VerifyLoadAndAcceptCookies(zoomInfoChatBotMainPage,ExpectedPolicyWords);
-
+        String ExpectedPolicyWords = "Insent stores cookies on your computer to improve your website experience and provide more personalized services, both on this website, our chat and through other media. To find out more about the cookies we use, see our Privacy Policy.";
+        zoomInfoChatBotModule.VerifyLoadAndAcceptCookies(zoomInfoChatBotMainPage, ExpectedPolicyWords);
     }
 
-    @Test(enabled = true ,priority = 3 )
+    // Test 3: Verify if Welcome Message is displayed appropriately
+    @Test(enabled = true, priority = 3)
     public void VerifyWelcomeMessage() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if WELCOME MESSAGE is displayed appropriately in the chatBot");
         String expected = "Hi there, welcome";
-        zoomInfoChatBotModule.VerifyWelcomeMessage(zoomInfoChatBotMainPage,expected);
-
+        zoomInfoChatBotModule.VerifyWelcomeMessage(zoomInfoChatBotMainPage, expected);
     }
-    @Test(enabled = true ,priority = 4 )
+
+    // Test 4: Verify if Welcome Message can be closed when close icon is hovered and clicked
+    @Test(enabled = true, priority = 4)
     public void VerifyWelcomeMessageCloseIcon() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if WELCOME MESSAGE is closed when close icon is hovered and clicked");
         zoomInfoChatBotModule.VerifyWelcomeMessageisClosedWhenHoverdAndClicked(zoomInfoChatBotMainPage);
-
     }
-    @Test(enabled = true ,priority = 5 )
+
+    // Test 5: Verify if Unread message notification icon is displayed and vanishes after reading
+    @Test(enabled = true, priority = 5)
     public void VerifyUnReadMessageNotification() throws InterruptedException {
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
         ExtentReportsManager.startTest("Verify if Unread message notification icon is displayed in the chatbot icon and post reading it vanishes");
         zoomInfoChatBotModule.VerifyUnreadMessageNotification(zoomInfoChatBotMainPage);
-
     }
-    @Test(enabled = true,priority = 6,dataProvider = "chatBotTestDataSet",dataProviderClass = DataProviderClass.class)
+
+    // Test 6: Verify if User Is Able To Enter a Valid Email ID or get an error with an invalid one
+    @Test(enabled = true, priority = 6, dataProvider = "chatBotTestDataSet", dataProviderClass = DataProviderClass.class)
     public void VerifyifUserIsAbleToEnterValidEmailId(Object data) throws InterruptedException, JsonProcessingException {
         String dataObject = JsonUtils.objectToJSONString(data);
         ObjectMapper objectMapper = new ObjectMapper();
-        EmailInputRoot emailInputRoot = objectMapper.readValue(dataObject,EmailInputRoot.class);
-
-
+        EmailInputRoot emailInputRoot = objectMapper.readValue(dataObject, EmailInputRoot.class);
 
         ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
-        ExtentReportsManager.startTest("Verify "+emailInputRoot.getScenario());
-        if(emailInputRoot.getUseCase().equals("valid")){
-            zoomInfoChatBotModule.verifyIfTheEmailInputIsValid(zoomInfoChatBotMainPage,emailInputRoot.getEmail());
-
-        }else if(emailInputRoot.getUseCase().equals("invalid")){
-
-            zoomInfoChatBotModule.verifyifEmailFieldReturnsErrorwithInvalidEmail(zoomInfoChatBotMainPage,emailInputRoot.getEmail(),emailInputRoot.getMessage());
-
-
-
+        ExtentReportsManager.startTest("Verify " + emailInputRoot.getScenario());
+        if (emailInputRoot.getUseCase().equals("valid")) {
+            zoomInfoChatBotModule.verifyIfTheEmailInputIsValid(zoomInfoChatBotMainPage, emailInputRoot.getEmail());
+        } else if (emailInputRoot.getUseCase().equals("invalid")) {
+            zoomInfoChatBotModule.verifyifEmailFieldReturnsErrorwithInvalidEmail(zoomInfoChatBotMainPage, emailInputRoot.getEmail(), emailInputRoot.getMessage());
         }
-
-
-
     }
 
-@AfterMethod
-public void closeDriver(){
-    driver.manage().deleteAllCookies();
-    driver.close();
-   driver.quit();
-}
+    @AfterMethod
+    public void closeDriver(){
+        driver.manage().deleteAllCookies();
+        driver.close();
+    }
 
     @AfterTest
     public void teardown(){
-       // driver.close();
-       // driver.quit();
+       // any tear down method to be perfomed after executing test shall be included here
+    }
+    @AfterSuite
+    public void afterSuite(){
+        // to include any actions that needs to be performed After suite
+        ExtentReportsManager.flushReport();
+        driver.quit();
 
 
     }

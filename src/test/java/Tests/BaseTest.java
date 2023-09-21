@@ -11,10 +11,5 @@ public class BaseTest {
         // to include any actions that needs to be performed before suite
     }
 
-    @AfterSuite
-    public void afterSuite(){
-        // to include any actions that needs to be performed After suite
-        ExtentReportsManager.flushReport();
 
-    }
 }
