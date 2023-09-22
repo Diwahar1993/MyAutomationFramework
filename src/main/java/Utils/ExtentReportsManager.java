@@ -66,7 +66,8 @@ public class ExtentReportsManager {
      * Log a screenshot with a description in the report.
      */
     public static synchronized void logScreenshot(String screenshotPath, String description) throws IOException {
-        test.get().addScreenCaptureFromPath(screenshotPath, description);
+        System.out.println("screenshot path for logging : "+screenshotPath);
+        test.get().addScreenCaptureFromPath(screenshotPath);
     }
 
     /**

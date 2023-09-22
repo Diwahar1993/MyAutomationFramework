@@ -1,6 +1,7 @@
 package Webpages.ZoomInfoChatBot;
 
 import Utils.ExtentReportsManager;
+import Utils.ScreenshotUtils;
 import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,11 +26,12 @@ public class ZoomInfoChatBotMainPage {
     private static final String URL="https://recruitment.web-test.insent.ai/fe-assignment";
 
     // Constructor
-    public ZoomInfoChatBotMainPage(WebDriver driver){
+    public ZoomInfoChatBotMainPage(WebDriver driver) throws IOException {
         this.driver=driver;
         driver.get(URL);
         PageFactory.initElements(driver,this);
         driver.manage().window().maximize();
+
     }
 
     // Xpath identification for various elements
@@ -79,7 +82,8 @@ public class ZoomInfoChatBotMainPage {
     }
 
     // Click the accept policy button
-    public void acceptPolicy(){
+    public void acceptPolicy() throws IOException {
+        ExtentReportsManager.logScreenshot(ScreenshotUtils.captureScreenshot(driver),"first Screenshot");
         acceptButton.click();
     }
 
@@ -195,5 +199,9 @@ public class ZoomInfoChatBotMainPage {
     }
     public String getCurrentWindowTitle(){
         return driver.getTitle();
+    }
+
+    public void takeScreenshot(){
+
     }
 }
