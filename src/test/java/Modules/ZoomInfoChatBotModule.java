@@ -3,6 +3,8 @@ package Modules;
 import Utils.ExtentReportsManager;
 import Webpages.ZoomInfoChatBot.ZoomInfoChatBotMainPage;
 
+import java.io.IOException;
+
 /**
  * Author: Diwahar Pandian
  */
@@ -22,7 +24,7 @@ public class ZoomInfoChatBotModule {
     }
 
     // Verify if the policy wording matches the expected wording and accept cookies
-    public void VerifyLoadAndAcceptCookies(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String ExpectedPolicyWords) {
+    public void VerifyLoadAndAcceptCookies(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String ExpectedPolicyWords) throws IOException {
         // Verify if the Policy wording is matching as Expected
         String actualPolicyWording = zoomInfoChatBotMainPage.readPolicyWording();
         if (actualPolicyWording.equals(ExpectedPolicyWords)) {
@@ -51,7 +53,7 @@ public class ZoomInfoChatBotModule {
     }
 
     // Verify if the welcome message can be closed when hovered and clicked
-    public void VerifyWelcomeMessageisClosedWhenHoverdAndClicked(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+    public void VerifyWelcomeMessageisClosedWhenHoverdAndClicked(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         String policyWordings = zoomInfoChatBotMainPage.readPolicyWording();
         if (!policyWordings.equals("")) {
@@ -66,7 +68,7 @@ public class ZoomInfoChatBotModule {
     }
 
     // Verify if the unread message notification icon is displayed and vanishes after reading
-    public void VerifyUnreadMessageNotification(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+    public void VerifyUnreadMessageNotification(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         zoomInfoChatBotMainPage.switchToChatBotFrame();
         zoomInfoChatBotMainPage.hoverToCloseIconAndClick();
@@ -80,7 +82,7 @@ public class ZoomInfoChatBotModule {
     }
 
     // Verify if a valid email input is accepted, and a default message is displayed
-    public void verifyIfTheEmailInputIsValid(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String email) {
+    public void verifyIfTheEmailInputIsValid(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String email) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         zoomInfoChatBotMainPage.switchToChatBotFrame();
         zoomInfoChatBotMainPage.clickOpenChatBotWindow();
@@ -99,7 +101,7 @@ public class ZoomInfoChatBotModule {
     }
 
     // Verify if an invalid email input returns an error message
-    public void verifyifEmailFieldReturnsErrorwithInvalidEmail(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String email, String expectedMessage) {
+    public void verifyifEmailFieldReturnsErrorwithInvalidEmail(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String email, String expectedMessage) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         zoomInfoChatBotMainPage.switchToChatBotFrame();
         zoomInfoChatBotMainPage.clickOpenChatBotWindow();
@@ -116,7 +118,7 @@ public class ZoomInfoChatBotModule {
     }
 
     // Verify if an User is able to restart the conversation
-    public void verifyIfUserIsAbleToRestarTheConversation(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+    public void verifyIfUserIsAbleToRestarTheConversation(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         zoomInfoChatBotMainPage.switchToChatBotFrame();
         zoomInfoChatBotMainPage.clickOpenChatBotWindow();
@@ -138,7 +140,7 @@ public class ZoomInfoChatBotModule {
 
     }
 
-    public void verifyIfUserisAbleToOpenAndCloseTheChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+    public void verifyIfUserisAbleToOpenAndCloseTheChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         zoomInfoChatBotMainPage.switchToChatBotFrame();
         zoomInfoChatBotMainPage.clickOpenChatBotWindow();
@@ -160,7 +162,7 @@ public class ZoomInfoChatBotModule {
 
     }
 
-    public void verifyIfUserIsAbleToOpenNewTabAndComeBackToChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) {
+    public void verifyIfUserIsAbleToOpenNewTabAndComeBackToChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) throws IOException {
         zoomInfoChatBotMainPage.acceptPolicy();
         zoomInfoChatBotMainPage.switchToChatBotFrame();
         zoomInfoChatBotMainPage.clickOpenChatBotWindow();
