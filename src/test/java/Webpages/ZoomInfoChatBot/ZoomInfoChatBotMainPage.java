@@ -81,6 +81,15 @@ public class ZoomInfoChatBotMainPage {
     @FindBy(xpath ="(//div[@class='sc-iwsKbI cWzUpN'])[last()]")
     WebElement thankyouForYourTime;
 
+    @FindBy(xpath="//img[@class='sc-kUaPvJ gbWvBL']")
+    WebElement ChatbackButton;
+
+    @FindBy(xpath="//h4[@class='sc-dREXXX frnCYw']")
+    WebElement hiWeAreZoomInfoMessage;
+
+    @FindBy(xpath ="//div[@class='sc-iNhVCk dbWRvG']")
+    WebElement lastConversationMessage;
+
 
     // Page Functions
 
@@ -254,5 +263,30 @@ public class ZoomInfoChatBotMainPage {
         ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Thank you for your Time | message is Displayed");
 
         return thankyouForYourTime.isDisplayed();
+    }
+
+    public void clickBackButton() {
+        ChatbackButton.click();
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Back button is clicked");
+
+    }
+
+    public boolean isMainWindowDisplaysDetailsofCompany() {
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Hi We are Zoom Info | Message displayed");
+        return hiWeAreZoomInfoMessage.isDisplayed();
+
+    }
+
+    public String getLastConversationMessage() {
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Last Conversation Message");
+
+        return lastConversationMessage.getText();
+    }
+
+    public void clickLastConversationMessage() {
+        lastConversationMessage.click();
+        waitforSometime();
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Last Conversation Message is clicked");
+
     }
 }

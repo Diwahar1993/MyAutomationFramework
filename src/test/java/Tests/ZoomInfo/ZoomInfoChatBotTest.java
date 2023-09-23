@@ -181,6 +181,19 @@ public class ZoomInfoChatBotTest extends BaseTest {
             logTestFailure(t);
         }
     }
+    //Click on a button (e.g., "<") to access a conversation.
+    @Test(enabled = true, priority = 11)
+    public void VerifyifUserIsAbleToClickBackButtonAndViewHisStoredConversation() {
+        try {
+            // Test 10 : Verify if User Is Able To click on < button and see if conversation is again accessible
+            ExtentReportsManager.startTest("Verify if User Is Able To click on < button and see if conversation is again accessible");
+            ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
+            zoomInfoChatBotModule.verifyIfUserIsAbleToClickBackInConversationAndViewHisChat(zoomInfoChatBotMainPage);
+
+        } catch (Throwable t) {
+            logTestFailure(t);
+        }
+    }
 
     @AfterMethod
     public void closeDriver() {
