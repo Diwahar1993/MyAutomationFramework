@@ -3,6 +3,8 @@ package Webpages.ZoomInfoChatBot;
 import Utils.ExtentReportsManager;
 import Utils.ScreenshotUtils;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +23,7 @@ import java.util.Set;
 public class ZoomInfoChatBotMainPage {
     WebDriver driver;
     private ExtentTest test; // ExtentTest instance for logging
+    ScreenshotUtils screenshotUtils = new ScreenshotUtils();
 
     // URL for the ZoomInfo Chat Bot page
     private static final String URL="https://recruitment.web-test.insent.ai/fe-assignment";
@@ -76,6 +79,7 @@ public class ZoomInfoChatBotMainPage {
         return driver.getTitle();
     }
 
+
     // Read and return the policy wording text
     public String readPolicyWording(){
         return policyWording.getText();
@@ -83,16 +87,18 @@ public class ZoomInfoChatBotMainPage {
 
     // Click the accept policy button
     public void acceptPolicy() throws IOException {
-        ExtentReportsManager.logScreenshot(ScreenshotUtils.captureScreenshot(driver),"first Screenshot");
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"accept policy");
         acceptButton.click();
     }
 
     // Get the welcome message from the instant pop-up
     public String getInstantPopUpMessage(){
+
         switchToChatBotFrame();
         System.out.println(driver.getTitle());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         wait.until(ExpectedConditions.visibilityOf(instantPopUpWelcomeMessage));
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"PopUp Message");
         return instantPopUpWelcomeMessage.getText();
     }
 
@@ -119,6 +125,7 @@ public class ZoomInfoChatBotMainPage {
     // Check if the unread message notification is displayed
     public boolean isUnreadNotificationDisplayed() {
         System.out.println("is unread Notification displayed ? "+unreadMessageNotification.isDisplayed());
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Unread Notification");
         return unreadMessageNotification.isDisplayed();
     }
 
@@ -134,12 +141,14 @@ public class ZoomInfoChatBotMainPage {
 
     // Check if the email input box is visible
     public boolean checkifEmailInputBoxisVisible(){
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Email input Visibility");
         return emailInput.isDisplayed();
     }
 
     // Enter an email address
     public void enterEmail(String email) {
         emailInput.sendKeys(email);
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Sending email key "+email);
     }
 
     // Submit the email address
@@ -149,6 +158,8 @@ public class ZoomInfoChatBotMainPage {
 
     // Check if the default "How do you know about Zoominfo?" message is displayed
     public boolean isDefaultHowDoYouKnowDisplayed(){
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Default How Do you know ? is displayed ");
+
         return howDoYouKnowZoomDefault.isDisplayed();
     }
 
@@ -160,6 +171,7 @@ public class ZoomInfoChatBotMainPage {
     // Get an error toaster message with the provided expected message
     public String getErrorToasterMessage(String expectedMessage) {
         WebElement errorMessage = driver.findElement(By.xpath(xpath.replace("{message}",expectedMessage)));
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Error Toaster with invalid input ");
         return errorMessage.getText();
     }
 
@@ -174,6 +186,7 @@ public class ZoomInfoChatBotMainPage {
     public boolean conversationListIsDisplayed() {
       try{
           ExtentReportsManager.logInfo("Chat window displayed "+insentConversationList.isDisplayed());
+          ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Chat Conversation");
           return insentConversationList.isDisplayed();
       }catch(Exception e){
           ExtentReportsManager.logInfo("Chat window is not  displayed ");
@@ -190,9 +203,11 @@ public class ZoomInfoChatBotMainPage {
         Set<String> windowHandles = driver.getWindowHandles();
         ArrayList<String> handleList = new ArrayList<String>(windowHandles);
       driver.switchTo().window(handleList.get(1));
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Google page");
       driver.get(url);
       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
       driver.switchTo().window(handleList.get(0));
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"waited in Google page and switched to chat page");
 
 
 
