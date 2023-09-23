@@ -15,7 +15,7 @@ public class ScreenshotUtils {
         String imageName = "IMG_"+System.currentTimeMillis() + ".png";
         File screenshotFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
         String baseUri =  System.getProperty("user.dir");
-        String filepath = baseUri+"/src/test/resources/Report/";
+        String filepath = baseUri+"/Report/";
         File targetFile = new File(filepath, imageName);
         try {
             FileUtils.copyFile(screenshotFile, targetFile);

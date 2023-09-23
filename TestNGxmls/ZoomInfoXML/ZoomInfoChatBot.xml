@@ -3,6 +3,10 @@
     <test name="My Test">
         <classes>
             <class name="Tests.ZoomInfo.ZoomInfoChatBotTest" />
+<!--            <methods>-->
+<!--                <include name="VerifyifUserIsAbleToClickBackButtonAndViewHisStoredConversation" />-->
+
+<!--            </methods>-->
         </classes>
     </test>
 </suite>

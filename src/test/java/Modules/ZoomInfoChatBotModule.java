@@ -217,10 +217,44 @@ public class ZoomInfoChatBotModule {
                     ExtentReportsManager.logFail("FAILED |"+"Source input"+source+" is Not Displlayed");
                 }
 
-
             }else {
                 ExtentReportsManager.logFail("FAILED | Chat bot have not ask the source question");
             }
+        }
+
+    }
+
+    public void verifyIfUserIsAbleToClickBackInConversationAndViewHisChat(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage) throws IOException {
+        zoomInfoChatBotMainPage.acceptPolicy();
+        zoomInfoChatBotMainPage.switchToChatBotFrame();
+        zoomInfoChatBotMainPage.clickOpenChatBotWindow();
+        // dont enter email
+        // click back
+        //verify if main window displays details of company
+        // verify if main window displays "email?" as your last conversation
+        // click message
+        // enter email and click send
+        // again click back and check " linkedin, friends,Website is displayed"
+
+        zoomInfoChatBotMainPage.clickBackButton();
+        if(zoomInfoChatBotMainPage.isMainWindowDisplaysDetailsofCompany()){
+            ExtentReportsManager.logPass("Main chat window displays |Hi, we're ZoomInfo| message in screen" );
+            ExtentReportsManager.logInfo("verify if main window displays \"Hello there Please give your email ID\" as your last conversation");
+            String message = zoomInfoChatBotMainPage.getLastConversationMessage();
+            if(message.contains("Hello there")){
+                ExtentReportsManager.logPass("Main chat window displays displays correct last conversation +"+message );
+            }else{
+                ExtentReportsManager.logFail("FAILED | Expected last message conversation :"+"Hello there Please give your email ID"+" Actual :"+message);
+            }
+
+            //enter email and send
+            //click on chat
+            zoomInfoChatBotMainPage.clickLastConversationMessage();
+
+
+
+        }else{
+            ExtentReportsManager.logFail("FAILED | Hi We are Zoom info message not Displayed");
         }
 
     }
