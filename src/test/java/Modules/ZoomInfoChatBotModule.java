@@ -189,4 +189,39 @@ public class ZoomInfoChatBotModule {
 
 
     }
+
+    public void verifyIfUserIsAbleToSelectDifferentSourceInChatBot(ZoomInfoChatBotMainPage zoomInfoChatBotMainPage, String source) throws IOException {
+        zoomInfoChatBotMainPage.acceptPolicy();
+        zoomInfoChatBotMainPage.switchToChatBotFrame();
+        zoomInfoChatBotMainPage.clickOpenChatBotWindow();
+        if (zoomInfoChatBotMainPage.checkifEmailInputBoxisVisible()) {
+            zoomInfoChatBotMainPage.enterEmail(source+"@zoominfo.com");
+            zoomInfoChatBotMainPage.submitEmail();
+            //verify if "how do you know about zoom info is displayed"
+            ExtentReportsManager.logInfo("verify if \"how do you know about zoom info is displayed ");
+            if(zoomInfoChatBotMainPage.isChatBotaskQuestiononSourceDisplayed()){
+                ExtentReportsManager.logPass("Chat bot successfully asked the source question" );
+                //verify if the source list are displayed
+                ExtentReportsManager.logInfo("verify if the source list are displayed");
+                if(zoomInfoChatBotMainPage.verifyIfInputSourceIsDisplayedAsOption(source)){
+                    ExtentReportsManager.logPass("Source input"+source+" is displayed as option successfully" );
+                    zoomInfoChatBotMainPage.clickSourceOptionSource(source);
+                    // post clicking | verify if "Thanks for your time!" is displayed
+                    ExtentReportsManager.logInfo("post clicking | verify if \"Thanks for your time!\" is displayed");
+                    if(zoomInfoChatBotMainPage.verifyIfThankYouForYourTimeIsDisplayed()){
+                        ExtentReportsManager.logPass("Thank you for your time message is displayed successfully after selecting source" );
+                    }else{
+                        ExtentReportsManager.logFail("FAILED |"+"Thank you for your time is not displayed");
+                    }
+                }else{
+                    ExtentReportsManager.logFail("FAILED |"+"Source input"+source+" is Not Displlayed");
+                }
+
+
+            }else {
+                ExtentReportsManager.logFail("FAILED | Chat bot have not ask the source question");
+            }
+        }
+
+    }
 }
