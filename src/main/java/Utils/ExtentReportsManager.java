@@ -2,10 +2,12 @@ package Utils;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+//import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import java.io.File;
@@ -15,7 +17,9 @@ public class ExtentReportsManager {
     private static ExtentReports extent;
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
     static String baseDir = System.getProperty("user.dir");
-    static String ReportPath = baseDir + "/src/test/resources/Report/extent-report.html";
+    static String ReportPath = baseDir + "/Report/screenshot-report.html";
+
+    // File destinationFile = new File(System.getProperty("user.dir")+"/Report/image_" + System.currentTimeMillis()+ ".png");
 
     /**
      * Get or create an instance of the ExtentReports class for managing the report.
@@ -23,12 +27,17 @@ public class ExtentReportsManager {
     public static ExtentReports getInstance() {
         if (extent == null) {
             extent = new ExtentReports();
-            ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(ReportPath);
+           /* ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(ReportPath);
             htmlReporter.config().setDocumentTitle("AUTOMATION TEST REPORT");
             htmlReporter.config().setReportName("ZOOMINFO CHATBOT");
             htmlReporter.config().setTheme(Theme.STANDARD);
 
-            extent.attachReporter(htmlReporter);
+            extent.attachReporter(htmlReporter);*/
+
+            //ExtentReports extent = new ExtentReports();
+            ExtentSparkReporter spark = new ExtentSparkReporter(ReportPath);
+            extent.attachReporter(spark);
+
         }
         return extent;
     }
@@ -67,7 +76,8 @@ public class ExtentReportsManager {
      */
     public static synchronized void logScreenshot(String screenshotPath, String description) throws IOException {
         System.out.println("screenshot path for logging : "+screenshotPath);
-        test.get().addScreenCaptureFromPath(screenshotPath);
+        test.get().addScreenCaptureFromPath(screenshotPath,description);
+
     }
 
     /**
@@ -76,6 +86,13 @@ public class ExtentReportsManager {
     public static synchronized void logInfoWithMarkup(String message) {
         test.get().log(Status.INFO, MarkupHelper.createLabel(message, ExtentColor.BLUE));
     }
+    public static synchronized  void logScreenshotMedia(String path){
+        test.get().log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(path).build());
+    }
+    public static synchronized  void logScreenshotMedia(String path,String description){
+        test.get().log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(path,description).build());
+    }
+
 
     /**
      * Flush and close the report.

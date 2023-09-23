@@ -28,9 +28,10 @@ dependencies {
     //
     testImplementation 'org.testng:testng:7.4.0'
    // testImplementation 'com.aventstack:extentreports:4.1.5'
-    implementation 'com.aventstack:extentreports:4.0.9'
+    implementation 'com.aventstack:extentreports:4.0.9'  // this works
     implementation 'io.rest-assured:rest-assured:4.3.0'
-
+    //implementation 'com.aventstack:extentreports:5.0.0'
+    implementation 'com.aventstack:extentreports:5.1.1'
 
 
 
