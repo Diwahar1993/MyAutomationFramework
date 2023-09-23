@@ -28,9 +28,20 @@ public class DataProviderClass {
 
     @DataProvider(name = "chatBotTestDataSet")
     public Object[][] chatBotTestDataSet() {
-        String filePath = "testdata.json";
         System.out.println("base directory is "+baseDir);
         List<JsonNode> dataObjects = jsonUtils.provideTestData(baseDir+"/src/test/resources/jsontestdata/ZoomInfo/ChatBot/chatBotScenarioData.json");
+
+        Object[][] testData = new Object[dataObjects.size()][1];
+        for (int i = 0; i < dataObjects.size(); i++) {
+            testData[i][0] = dataObjects.get(i);
+        }
+
+        return testData;
+    }
+    @DataProvider(name = "chatBotSourceDataSet")
+    public Object[][] chatBotSourceDataSet() {
+        System.out.println("base directory is "+baseDir);
+        List<JsonNode> dataObjects = jsonUtils.provideTestData(baseDir+"/src/test/resources/jsontestdata/ZoomInfo/ChatBot/chatBotSourceData.json");
 
         Object[][] testData = new Object[dataObjects.size()][1];
         for (int i = 0; i < dataObjects.size(); i++) {

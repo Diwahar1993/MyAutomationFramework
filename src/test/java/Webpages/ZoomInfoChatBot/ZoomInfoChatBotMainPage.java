@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 public class ZoomInfoChatBotMainPage {
+
     WebDriver driver;
     private ExtentTest test; // ExtentTest instance for logging
     ScreenshotUtils screenshotUtils = new ScreenshotUtils();
@@ -71,6 +72,15 @@ public class ZoomInfoChatBotMainPage {
     WebElement insentConversationList;
     @FindBy(xpath ="//div[@data-testId='insent-test-card-close']")
     WebElement closeIcon;
+
+    @FindBy(xpath ="(//div[@class='sc-iwsKbI cWzUpN'])[last()]")
+     WebElement getHowDoYouKnowZoomText;
+
+    String source ="//div[@id='insent-buttons-message-button' and text()='{source}' ] ";
+
+    @FindBy(xpath ="(//div[@class='sc-iwsKbI cWzUpN'])[last()]")
+    WebElement thankyouForYourTime;
+
 
     // Page Functions
 
@@ -203,8 +213,8 @@ public class ZoomInfoChatBotMainPage {
         Set<String> windowHandles = driver.getWindowHandles();
         ArrayList<String> handleList = new ArrayList<String>(windowHandles);
       driver.switchTo().window(handleList.get(1));
-        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Google page");
       driver.get(url);
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Google page");
       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
       driver.switchTo().window(handleList.get(0));
         ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"waited in Google page and switched to chat page");
@@ -218,5 +228,31 @@ public class ZoomInfoChatBotMainPage {
 
     public void takeScreenshot(){
 
+    }
+
+    public boolean isChatBotaskQuestiononSourceDisplayed() {
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"How do you know about Zoominfo? is displayed");
+        return getHowDoYouKnowZoomText.isDisplayed();
+    }
+
+    public boolean verifyIfInputSourceIsDisplayedAsOption(String sourceinput) {
+        WebElement sourceData = driver.findElement(By.xpath(source.replace("{source}",sourceinput)));
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Source Data "+sourceinput +" is displayed");
+        return sourceData.isDisplayed();
+    }
+
+    public void clickSourceOptionSource(String sourceinput) {
+        WebElement sourceData = driver.findElement(By.xpath(source.replace("{source}",sourceinput)));
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Source input "+sourceinput+" is not clicked");
+        sourceData.click();
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Source input "+sourceinput+" is clicked");
+
+
+    }
+
+    public boolean verifyIfThankYouForYourTimeIsDisplayed() {
+        ExtentReportsManager.logScreenshotMedia(screenshotUtils.captureScreenShot(driver),"Thank you for your Time | message is Displayed");
+
+        return thankyouForYourTime.isDisplayed();
     }
 }

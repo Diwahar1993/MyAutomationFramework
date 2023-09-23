@@ -2,6 +2,7 @@ package Tests.ZoomInfo;
 
 import DataProviders.DataProviderClass;
 import Modules.ZoomInfoChatBotModule;
+import POJO.ChatBotSourceRoot;
 import POJO.EmailInputRoot;
 import Tests.BaseTest;
 import Utils.ExtentReportsManager;
@@ -160,6 +161,22 @@ public class ZoomInfoChatBotTest extends BaseTest {
             ExtentReportsManager.logInfoWithMarkup("Open a new tab with google.com ,stay there for 10 seconds, come back to chat\n" +
                     "page and enter the data in the bot.");
             zoomInfoChatBotModule.verifyIfUserIsAbleToOpenNewTabAndComeBackToChat(zoomInfoChatBotMainPage);
+        } catch (Throwable t) {
+            logTestFailure(t);
+        }
+    }
+    @Test(enabled = true, priority = 10, dataProvider = "chatBotSourceDataSet", dataProviderClass = DataProviderClass.class)
+    public void VerifyifUserIsAbleToSelectDifferentSources(Object data) {
+        try {
+            // Test 10 : Verify if User Is Able To Select Different Sources in chat bot
+            String dataObject = JsonUtils.objectToJSONString(data);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ChatBotSourceRoot chatBotSourceRoot= objectMapper.readValue(dataObject, ChatBotSourceRoot.class);
+            String source =chatBotSourceRoot.getSource();
+            ExtentReportsManager.startTest("Verify if User Is Able To Select Different Sources in chat bot |"+source);
+            ZoomInfoChatBotMainPage zoomInfoChatBotMainPage = new ZoomInfoChatBotMainPage(driver);
+            zoomInfoChatBotModule.verifyIfUserIsAbleToSelectDifferentSourceInChatBot(zoomInfoChatBotMainPage,source);
+
         } catch (Throwable t) {
             logTestFailure(t);
         }
