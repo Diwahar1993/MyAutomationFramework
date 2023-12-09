@@ -17,7 +17,7 @@ public class SampleSelenium {
         WebDriver driver = new ChromeDriver();
 
 
-        driver.get("https://www.example.com");
+        driver.get("https://www.google.com");
 
         //WebElement element = fluentWaitForElement(driver, By.id("someElementId"), Duration.ofSeconds(30));
 
